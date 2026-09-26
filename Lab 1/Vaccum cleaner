@@ -1,0 +1,55 @@
+import random
+
+def clean(location, status):
+    if status == "dirty":
+        return "suck"
+
+    return "no_op"
+
+
+def vacuum_cleaner():
+    # Initial state
+    location = random.choice(["A", "B"])
+
+    # Room status
+    model = {
+        "A": random.choice(["clean", "dirty"]),
+        "B": random.choice(["clean", "dirty"])
+    }
+
+    print("Initial State:")
+    print("Vacuum location:", location)
+    print("Room A:", model["A"])
+    print("Room B:", model["B"])
+    print()
+
+    while True:
+
+        # Goal state: both rooms are clean
+        if model["A"] == "clean" and model["B"] == "clean":
+            print("Goal state achieved!")
+            print("Vacuum cleaner shuts down.")
+            break
+
+        # Current room status
+        status = model[location]
+
+        # Clean current room if dirty
+        action = clean(location, status)
+
+        if action == "suck":
+            print("Room", location, "is dirty -> Suck")
+            model[location] = "clean"
+
+        # Move to the other room
+        else:
+            if location == "A":
+                location = "B"
+                print("Room A is clean -> Move Right")
+            else:
+                location = "A"
+                print("Room B is clean -> Move Left")
+
+
+if __name__ == "__main__":
+    vacuum_cleaner()
